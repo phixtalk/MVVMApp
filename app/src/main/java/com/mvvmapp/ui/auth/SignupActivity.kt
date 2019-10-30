@@ -2,6 +2,7 @@ package com.mvvmapp.ui.auth
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.mvvmapp.R
 
 class SignupActivity : AppCompatActivity() {
 
