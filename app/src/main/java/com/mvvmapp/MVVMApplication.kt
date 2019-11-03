@@ -4,8 +4,12 @@ import android.app.Application
 import com.mvvmapp.data.db.AppDatabase
 import com.mvvmapp.data.network.MyApi
 import com.mvvmapp.data.network.NetworkConnectionInterceptor
+import com.mvvmapp.data.preferences.PreferenceProvider
+import com.mvvmapp.data.repositories.QuotesRepository
 import com.mvvmapp.data.repositories.UserRepository
 import com.mvvmapp.ui.auth.AuthViewModelFactory
+import com.mvvmapp.ui.home.profile.ProfileViewModelFactory
+import com.mvvmapp.ui.home.quotes.QuotesViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -23,12 +27,12 @@ class MVVMApplication : Application(), KodeinAware {
         bind() from singleton { NetworkConnectionInterceptor(instance()) }
         bind() from singleton { MyApi(instance()) }
         bind() from singleton { AppDatabase(instance()) }
-        //bind() from singleton { PreferenceProvider(instance()) }
+        bind() from singleton { PreferenceProvider(instance()) }
         bind() from singleton { UserRepository(instance(), instance()) }
-//        bind() from singleton { QuotesRepository(instance(), instance(), instance()) }
+        bind() from singleton { QuotesRepository(instance(), instance(), instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
-//        bind() from provider { ProfileViewModelFactory(instance()) }
-//        bind() from provider{ QuotesViewModelFactory(instance())}
+        bind() from provider { ProfileViewModelFactory(instance()) }
+        bind() from provider{ QuotesViewModelFactory(instance()) }
 
 
     }

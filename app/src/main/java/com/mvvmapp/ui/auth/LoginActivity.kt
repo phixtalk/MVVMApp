@@ -7,18 +7,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.mvvmapp.R
-import com.mvvmapp.data.db.AppDatabase
 import com.mvvmapp.data.db.entities.User
-import com.mvvmapp.data.network.MyApi
-import com.mvvmapp.data.network.NetworkConnectionInterceptor
-import com.mvvmapp.data.repositories.UserRepository
 import com.mvvmapp.databinding.ActivityLoginBinding
 import com.mvvmapp.ui.home.HomeActivity
 import com.mvvmapp.util.hide
 import com.mvvmapp.util.show
 import com.mvvmapp.util.snackbar
 import kotlinx.android.synthetic.main.activity_login.*
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -32,13 +27,6 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-//        val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
-//        val api = MyApi(networkConnectionInterceptor)
-//        val db = AppDatabase(this)
-//        val respository = UserRepository(api, db)
-//        val factory = AuthViewModelFactory(respository)
 
         val binding : ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         val viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)

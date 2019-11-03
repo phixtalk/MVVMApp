@@ -13,11 +13,16 @@
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:background="#E2E2E2"
-        android:layout_height="match_parent"
-        tools:context=".ui.auth.SignupActivity">
+        android:layout_height="match_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/root_layout"
+            android:layout_width="match_parent"
+            android:background="#E2E2E2"
+            android:layout_height="match_parent"
+            tools:context=".ui.auth.SignupActivity">
 
 
         <RelativeLayout
@@ -158,6 +163,8 @@
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </ScrollView>
 </layout>
 
 
