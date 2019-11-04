@@ -7,10 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.mvvmapp.R
+import com.mvvmapp.data.db.entities.Quote
 import com.mvvmapp.util.Coroutines
+import com.mvvmapp.util.hide
+import com.mvvmapp.util.show
 import com.mvvmapp.util.toast
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.quotes_fragment.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -33,14 +40,36 @@ class QuotesFragment : Fragment(), KodeinAware {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, factory).get(QuotesViewModel::class.java)
+        bindUI()
+    }
 
-        Coroutines.main {
-            val quotes = viewModel.quotes.await()
-            quotes.observe(this, Observer {
-                context?.toast(it.size.toString())
-            })
+    private fun bindUI() = Coroutines.main {
+        progress_bar.show()
+        viewModel.quotes.await().observe(this, Observer {
+            progress_bar.hide()
+            initRecyclerView(it.toQuoteItem())
+        })
+    }
+
+    private fun initRecyclerView(quoteItem: List<QuoteItem>) {
+
+        val mAdapter = GroupAdapter<ViewHolder>().apply {
+            addAll(quoteItem)
         }
 
+        recyclerview.apply {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            adapter = mAdapter
+        }
+
+    }
+
+
+    private fun List<Quote>.toQuoteItem() : List<QuoteItem>{
+        return this.map {
+            QuoteItem(it)
+        }
     }
 
 }
